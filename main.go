@@ -23,5 +23,7 @@ func main() {
 
 	engine.GET("/pdf/*", standard.WrapHandler(http.StripPrefix("/pdf/", assetHandler)))
 
+	engine.POST("/upload", upload)
+
 	engine.Run(standard.New(":1337"))
 }
