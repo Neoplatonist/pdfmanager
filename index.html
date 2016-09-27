@@ -5,6 +5,13 @@
     <title>PDF File Server</title>
   </head>
   <body>
+    <h1>File Browser</h1>
     <a href="/pdf/">PDF's</a>
+
+    <h2>Upload single file with fields</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        Files: <input type="file" name="file"><br><br>
+        <input type="submit" value="Submit">
+    </form>
   </body>
 </html>
