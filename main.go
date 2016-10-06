@@ -20,13 +20,21 @@ func main() {
 	engine.Use(middleware.Logger())
 	engine.Use(middleware.Recover())
 
+	g := engine.Group("/*")
+	g.Use(middleware.BasicAuth(func(username, password string) bool {
+		if username == "admin" && password == "1234" {
+			return true
+		}
+		return false
+	}))
+	g.File("/upload", "upload.html")
+	g.POST("/upload", upload)
+
 	assetHandler := http.FileServer(rice.MustFindBox("pdf").HTTPBox())
 
 	engine.File("/", "index.html")
 
 	engine.GET("/pdf/*", standard.WrapHandler(http.StripPrefix("/pdf/", assetHandler)))
-
-	engine.POST("/upload", upload)
 
 	engine.Run(standard.New(":1337"))
 }
